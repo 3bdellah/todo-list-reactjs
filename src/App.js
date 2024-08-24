@@ -2,56 +2,108 @@ import "./App.css";
 import * as React from "react";
 import { Container } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import ToDoList from "./components/ToDoList";
 import TodolistBtn from "./components/TodolistBtn";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
+//athor:
+import { v4 as uuid } from "uuid";
+const initialTodos = [
+  {
+    id: uuid(),
+    title: "قراءة الحزب الراتب",
+    body: "كل يوم بعد صلاة المغرب",
+    IsComplited: false,
+  },
+  { id: uuid(), title: "تعلم React js", body: "كل يوم", IsComplited: true },
+  {
+    id: uuid(),
+    title: "إتمام مشروع Todo List",
+    body: "قبل نهاية الأسبوع",
+    IsComplited: false,
+  },
+];
+
+const Theme = createTheme({
+  typography: {
+    fontFamily: ["Cairo"],
+  },
+});
 
 function App() {
-  return (
-    <div className="App">
-      <Container maxWidth="sm">
-        <div className="home">
-          <h1>مهامي</h1>
-          <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
-          <TodolistBtn />
-          <ToDoList />
-          <ToDoList />
-          <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
-          <div className="btn">
-            <Stack spacing={0} direction="row" sx={{ p: 2, width: "100%" }}>
-              <Button
-                variant="contained"
-                startIcon={<PlaylistAddOutlinedIcon />}
-                sx={{ width: "30%" }}
-                onClick={() => {
-                  alert("clicked");
-                }}
-              >
-                إضافة
-              </Button>
+  const [ToDos, setToDos] = useState(initialTodos);
+  const [titleInput, setTitleInput] = useState("");
+  const ToDosJsx = ToDos.map((T) => {
+    return <ToDoList key={T.id} title={T.title} body={T.body} />;
+  });
 
-              <Box
-                component="form"
-                noValidate
-                autoComplete="off"
-                sx={{ width: "70%" }}
-              >
-                <TextField
-                  id="outlined-basic"
-                  label="عنوان المهمة"
-                  variant="outlined"
-                  sx={{ width: "85%" }}
-                />
-              </Box>
-            </Stack>
+  function handelAddClick() {
+    const newToDo = {
+      id: uuid(),
+      title: titleInput,
+      body: "",
+      IsComplited: false,
+    };
+    setToDos([...ToDos, newToDo]);
+    setTitleInput("");
+  }
+
+  return (
+    <ThemeProvider theme={Theme}>
+      <div className="App">
+        <Container maxWidth="sm">
+          <div className="home">
+            <h1>مهامي</h1>
+            <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
+            <TodolistBtn />
+            {ToDosJsx}
+            <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
+            <div className="btn">
+              <Grid container spacing={1} style={{ paddingBottom: "10px" }}>
+                <Grid
+                  item
+                  xs={4}
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                >
+                  <Button
+                    variant="contained"
+                    startIcon={<PlaylistAddOutlinedIcon />}
+                    sx={{ width: "100%", height: "100%" }}
+                    onClick={handelAddClick}
+                  >
+                    إضافة
+                  </Button>
+                </Grid>
+                <Grid
+                  item
+                  xs={8}
+                  display="flex"
+                  justifyContent="space-around"
+                  alignItems="center"
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="عنوان المهمة"
+                    variant="outlined"
+                    sx={{ width: "100%" }}
+                    value={titleInput}
+                    onChange={(e) => {
+                      setTitleInput(e.target.value);
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </div>
           </div>
-        </div>
-      </Container>
-    </div>
+        </Container>
+      </div>
+    </ThemeProvider>
   );
 }
 

@@ -1,15 +1,15 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #191b1f;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "Cairo", sans-serif;
-  /* justify-content: center; */
+font-weight: bold;
+  justify-content: center;
 }
 
 .home{ 
@@ -19,43 +19,73 @@
       align-items: center;
       justify-content: center;
   }
+
 .add-btn{
   display: flex;
 }
+
 .btn button {
   background-color: #851835;
   color: #fff;
-  font-family: "Cairo", sans-serif;
+  
 }
 .btn-group{
   margin: auto;
   width: 50%;
 }
-.btn-group button{
-  font-family: "Cairo", sans-serif;
-
+.btn{
+  margin: 10px;
 }
-
 .TodoList{
   background-color:#1b7993;
   border-Radius: 5px ;
   margin: 10px;
   color: #fff;
+  padding: 0px;
+  transition: all 0.2s;
 
 }
 .TodoList:hover{
   box-shadow: rgba(0, 0, 0, 0.456) 0px 5px 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .TodoList button{
   width: 40px;
   height: 40px;
+  line-height: 0px;
   border-radius: 50%;
   border-style:none ;
   margin-right: 20px;
-  margin-top: 20%;
-  box-shadow: rgba(133, 24, 53, 0.438) 2px 5px 15px;
+  transition: all 0.2s ;
  
 }
-.TodoTitle{
-  padding-right: 20px;
+.TodoList button:hover{
+background-color: #90e7ff;
+box-shadow: rgba(47, 47, 47, 0.438) 0px 0px 10px;
 }
+.TodoTitle {
+  text-align: right;
+  margin-right: 15px;
+  padding: 10px;
+}
+
+/*Custo font*/
+@font-face{
+  font-family: Cairo;
+  src: url("../public/fonts/Cairo-Bold.ttf");
+  font-weight: bold;
+}
+@font-face{
+  font-family: Cairo;
+  src: url("../public/fonts/Cairo-Light.ttf");
+  font-weight: light;
+
+}
+@font-face{
+  font-family: Cairo;
+  src: url("../public/fonts/Cairo-Regular.ttf");
+  font-weight: normal;
+
+}
+/*-----------------------------*/
