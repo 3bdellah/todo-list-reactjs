@@ -10,6 +10,7 @@ import ToDoList from "./components/ToDoList";
 import TodolistBtn from "./components/TodolistBtn";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
+// import CustomizedSnackbars from "./components/CustomizedSnackbars";
 //athor:
 import { v4 as uuid } from "uuid";
 const initialTodos = [
@@ -38,8 +39,18 @@ function App() {
   const [ToDos, setToDos] = useState(initialTodos);
   const [titleInput, setTitleInput] = useState("");
   const ToDosJsx = ToDos.map((T) => {
-    return <ToDoList key={T.id} title={T.title} body={T.body} />;
+    return <ToDoList key={T.id} todo={T} handelCheck={handelClickDaneBtn} />;
   });
+
+  function handelClickDaneBtn(id) {
+    const newTodoupdate = ToDos.map((t) => {
+      if (t.id === id) {
+        t.IsComplited = !t.IsComplited;
+      }
+      return t;
+    });
+    setToDos(newTodoupdate);
+  }
 
   function handelAddClick() {
     const newToDo = {
@@ -50,6 +61,7 @@ function App() {
     };
     setToDos([...ToDos, newToDo]);
     setTitleInput("");
+    // <CustomizedSnackbars />;
   }
 
   return (

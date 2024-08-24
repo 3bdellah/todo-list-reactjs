@@ -8,7 +8,7 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import { pink } from "@mui/material/colors";
 import { Typography } from "@mui/material";
 
-function ToDoList({ title, body }) {
+function ToDoList({ todo, handelCheck }) {
   return (
     <div className="TodoList">
       <Box sx={{ flexGrow: 1 }}>
@@ -26,17 +26,26 @@ function ToDoList({ title, body }) {
             <button>
               <EditOutlinedIcon color="primary" />
             </button>
-            <button>
-              <DoneOutlinedIcon color="success" />
+            <button
+              onClick={() => {
+                handelCheck(todo.id);
+              }}
+              style={{
+                background: todo.IsComplited ? "#05dd2d" : "white",
+              }}
+            >
+              <DoneOutlinedIcon
+                style={{ color: todo.IsComplited ? "white" : "#05dd2d" }}
+              />
             </button>
           </Grid>
           <Grid item xs={7}>
             <div className="TodoTitle">
               <Typography variant="h5" style={{ fontWeight: "bold" }}>
-                {title}
+                {todo.title}
               </Typography>
               <Typography variant="h6" style={{ fontWeight: "light" }}>
-                {body}
+                {todo.body}
               </Typography>
             </div>
           </Grid>
@@ -45,5 +54,6 @@ function ToDoList({ title, body }) {
     </div>
   );
 }
+// { todo.IsComplited ? `style={{backgroundColor:"green"}}` : "" }
 
 export default ToDoList;

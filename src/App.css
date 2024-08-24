@@ -61,7 +61,7 @@ font-weight: bold;
  
 }
 .TodoList button:hover{
-background-color: #90e7ff;
+background-color: #e4e4e4dc !important;
 box-shadow: rgba(47, 47, 47, 0.438) 0px 0px 10px;
 }
 .TodoTitle {
