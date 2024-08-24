@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { dialogopenContext } from "../contexts/dialogopenContext";
 import { ToDosContext } from "../contexts/ToDosContext";
 
-export default function AlertDialog({ id }) {
+export default function DeleteDialog({ id }) {
   const { open, setopen } = useContext(dialogopenContext);
   const { ToDos, setToDos } = useContext(ToDosContext);
 
