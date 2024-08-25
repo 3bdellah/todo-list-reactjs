@@ -5,9 +5,11 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import Box from "@mui/material/Box";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import ToDoList from "./components/ToDoList";
-import TodolistBtn from "./components/TodolistBtn";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState, useEffect } from "react";
 import { ToDosContext } from "./contexts/ToDosContext";
@@ -42,9 +44,35 @@ function App() {
   const [ToDos, setToDos] = useState(initialTodos);
   const [titleInput, setTitleInput] = useState("");
   const [addopen, setAddOpen] = useState(false);
-  const ToDosJsx = ToDos.map((T) => {
+  const [DisplayTodosbtn, setDisplayTodosbtn] = useState("all");
+  //Todos button
+
+  const ComplitedToDos = ToDos.filter((T) => {
+    return T.IsComplited;
+  });
+  const NotComplitedToDos = ToDos.filter((T) => {
+    return !T.IsComplited;
+  });
+
+  let ToDostemp;
+
+  if (DisplayTodosbtn === "all") {
+    ToDostemp = ToDos;
+  } else if (DisplayTodosbtn === "complited") {
+    ToDostemp = ComplitedToDos;
+  } else {
+    ToDostemp = NotComplitedToDos;
+  }
+
+  let ToDosJsx = ToDostemp.map((T) => {
     return <ToDoList key={T.id} todo={T} />;
   });
+
+  function handelDisplayChange(e) {
+    const newValue = e.target.value;
+    setDisplayTodosbtn(newValue);
+  }
+
   useEffect(() => {
     const LocalTodos = JSON.parse(localStorage.getItem("ToDos"));
     setToDos(LocalTodos);
@@ -79,7 +107,36 @@ function App() {
                   variant="middle"
                   style={{ borderColor: "#4343439d" }}
                 />
-                <TodolistBtn />
+                {/* to do btn ---------------------------------------------------------- */}
+                <Box component="section" sx={{ p: 2 }} className="btn-group">
+                  <ToggleButtonGroup
+                    aria-label="Complited button"
+                    color="warning"
+                    exclusive
+                    value={DisplayTodosbtn}
+                    onChange={handelDisplayChange}
+                  >
+                    <ToggleButton
+                      value="notComplited"
+                      style={{ fontWeight: "bold", borderColor: "#851835" }}
+                    >
+                      غير منجز
+                    </ToggleButton>
+                    <ToggleButton
+                      value="complited"
+                      style={{ fontWeight: "bold", borderColor: "#851835" }}
+                    >
+                      منجز
+                    </ToggleButton>
+                    <ToggleButton
+                      value="all"
+                      style={{ fontWeight: "bold", borderColor: "#851835" }}
+                    >
+                      الكل
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Box>
+                {/**------------------------------------------------------------------------- */}
                 {ToDosJsx}
                 <Divider
                   variant="middle"
