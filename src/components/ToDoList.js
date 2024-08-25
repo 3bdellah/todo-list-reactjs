@@ -27,6 +27,7 @@ function ToDoList({ todo }) {
       return t;
     });
     setToDos(newTodoupdate);
+    localStorage.setItem("ToDos", JSON.stringify(newTodoupdate));
   }
   function handelDeleteClick() {
     setopen(true);

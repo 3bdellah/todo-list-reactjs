@@ -29,6 +29,7 @@ export default function UpdateDialog({ id }) {
       } else return t;
     });
     setToDos(UpdatedTodo);
+    localStorage.setItem("ToDos", JSON.stringify(UpdatedTodo));
   }
 
   return (

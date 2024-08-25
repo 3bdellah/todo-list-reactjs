@@ -21,6 +21,7 @@ export default function DeleteDialog({ id }) {
       return t.id !== id;
     });
     setToDos(updateToDos);
+    localStorage.setItem("ToDos", JSON.stringify(updateToDos));
   }
   return (
     <React.Fragment>

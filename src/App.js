@@ -9,7 +9,7 @@ import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import ToDoList from "./components/ToDoList";
 import TodolistBtn from "./components/TodolistBtn";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToDosContext } from "./contexts/ToDosContext";
 import { AddopenContext } from "./contexts/AddopenContext";
 import CustomizedSnackbars from "./components/CustomizedSnackbars";
@@ -45,6 +45,10 @@ function App() {
   const ToDosJsx = ToDos.map((T) => {
     return <ToDoList key={T.id} todo={T} />;
   });
+  useEffect(() => {
+    const LocalTodos = JSON.parse(localStorage.getItem("ToDos"));
+    setToDos(LocalTodos);
+  }, []);
 
   function handelAddClick() {
     const newToDo = {
@@ -53,9 +57,13 @@ function App() {
       body: "",
       IsComplited: false,
     };
-    setToDos([...ToDos, newToDo]);
-    setTitleInput("");
-    setAddOpen(true);
+    if (titleInput !== "") {
+      const ToDosAdded = [...ToDos, newToDo];
+      setToDos(ToDosAdded);
+      localStorage.setItem("ToDos", JSON.stringify(ToDosAdded));
+      setTitleInput("");
+      setAddOpen(true);
+    }
   }
 
   return (
@@ -104,7 +112,7 @@ function App() {
                     >
                       <TextField
                         id="outlined-basic"
-                        label="عنوان المهمة"
+                        label="مهمة جديدة"
                         variant="outlined"
                         sx={{ width: "100%" }}
                         value={titleInput}
