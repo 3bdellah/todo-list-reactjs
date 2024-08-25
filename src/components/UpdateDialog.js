@@ -91,7 +91,7 @@ export default function UpdateDialog({ id }) {
         <DialogActions>
           <Button onClick={handleClose}>إلغاء</Button>
           <Button type="submit" onClick={handleUpdate}>
-            تعديل
+            تحديث
           </Button>
         </DialogActions>
       </Dialog>

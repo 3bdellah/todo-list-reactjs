@@ -21,15 +21,14 @@ import { v4 as uuid } from "uuid";
 const initialTodos = [
   {
     id: uuid(),
-    title: "قراءة الحزب الراتب",
-    body: "كل يوم بعد صلاة المغرب",
-    IsComplited: false,
+    title: "المهمة الأولى",
+    body: "تفاصيل المهمة الأولى",
+    IsComplited: true,
   },
-  { id: uuid(), title: "تعلم React js", body: "كل يوم", IsComplited: true },
   {
     id: uuid(),
-    title: "إتمام مشروع Todo List",
-    body: "قبل نهاية الأسبوع",
+    title: "المهمة الثانية",
+    body: "تفاصيل المهمة الثانية",
     IsComplited: false,
   },
 ];
@@ -38,6 +37,14 @@ const Theme = createTheme({
   typography: {
     fontFamily: ["Cairo"],
   },
+  palette: {
+    primary: {
+      main: "#851835",
+    },
+    secondary: {
+      main: "#1b7993",
+    },
+  },
 });
 
 function App() {
@@ -45,7 +52,6 @@ function App() {
   const [titleInput, setTitleInput] = useState("");
   const [addopen, setAddOpen] = useState(false);
   const [DisplayTodosbtn, setDisplayTodosbtn] = useState("all");
-  //Todos button
 
   const ComplitedToDos = ToDos.filter((T) => {
     return T.IsComplited;
@@ -56,12 +62,12 @@ function App() {
 
   let ToDostemp;
 
-  if (DisplayTodosbtn === "all") {
-    ToDostemp = ToDos;
+  if (DisplayTodosbtn === "notComplited") {
+    ToDostemp = NotComplitedToDos;
   } else if (DisplayTodosbtn === "complited") {
     ToDostemp = ComplitedToDos;
   } else {
-    ToDostemp = NotComplitedToDos;
+    ToDostemp = ToDos;
   }
 
   let ToDosJsx = ToDostemp.map((T) => {
@@ -75,7 +81,9 @@ function App() {
 
   useEffect(() => {
     const LocalTodos = JSON.parse(localStorage.getItem("ToDos"));
-    setToDos(LocalTodos);
+    if (LocalTodos != null) {
+      setToDos(LocalTodos);
+    }
   }, []);
 
   function handelAddClick() {
@@ -85,13 +93,11 @@ function App() {
       body: "",
       IsComplited: false,
     };
-    if (titleInput !== "") {
-      const ToDosAdded = [...ToDos, newToDo];
-      setToDos(ToDosAdded);
-      localStorage.setItem("ToDos", JSON.stringify(ToDosAdded));
-      setTitleInput("");
-      setAddOpen(true);
-    }
+    const ToDosAdded = [...ToDos, newToDo];
+    setToDos(ToDosAdded);
+    localStorage.setItem("ToDos", JSON.stringify(ToDosAdded));
+    setTitleInput("");
+    setAddOpen(true);
   }
 
   return (
@@ -111,10 +117,10 @@ function App() {
                 <Box component="section" sx={{ p: 2 }} className="btn-group">
                   <ToggleButtonGroup
                     aria-label="Complited button"
-                    color="warning"
                     exclusive
                     value={DisplayTodosbtn}
                     onChange={handelDisplayChange}
+                    color="primary"
                   >
                     <ToggleButton
                       value="notComplited"
@@ -137,7 +143,9 @@ function App() {
                   </ToggleButtonGroup>
                 </Box>
                 {/**------------------------------------------------------------------------- */}
-                {ToDosJsx}
+                <div style={{ maxHeight: "55vh", overflowY: "scroll" }}>
+                  {ToDosJsx}
+                </div>
                 <Divider
                   variant="middle"
                   style={{ borderColor: "#4343439d" }}
@@ -156,6 +164,7 @@ function App() {
                         startIcon={<PlaylistAddOutlinedIcon />}
                         sx={{ width: "100%", height: "100%" }}
                         onClick={handelAddClick}
+                        disabled={titleInput.length <= 0}
                       >
                         إضافة
                       </Button>
@@ -169,9 +178,10 @@ function App() {
                     >
                       <TextField
                         id="outlined-basic"
+                        color="primary"
                         label="مهمة جديدة"
                         variant="outlined"
-                        sx={{ width: "100%" }}
+                        style={{ direction: "rtl", width: "100%" }}
                         value={titleInput}
                         onChange={(e) => {
                           setTitleInput(e.target.value);

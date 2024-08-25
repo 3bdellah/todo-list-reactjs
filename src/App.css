@@ -2,7 +2,6 @@
 
 .App {
   text-align: center;
-  background-color: #191b1f;
   background-image: url("../public/bg.jpg");
   background-size: cover;
   min-height: 100vh;
@@ -20,7 +19,7 @@ font-weight: bold;
       border-Radius: 5px ;
       align-items: center;
       justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.456) 0px 5px 15px;
+      box-shadow: rgba(0, 0, 0, 0.456) 0px 5px 15px;
 
   }
 

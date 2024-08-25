@@ -55,14 +55,14 @@ function ToDoList({ todo }) {
                     handelDeleteClick();
                   }}
                 >
-                  <DeleteOutlineOutlinedIcon sx={{ color: pink[500] }} />
+                  <DeleteOutlineOutlinedIcon sx={{ color: pink[700] }} />
                 </button>
                 <button
                   onClick={() => {
                     handelUpdateClick();
                   }}
                 >
-                  <EditOutlinedIcon color="primary" />
+                  <EditOutlinedIcon color="secondary" />
                 </button>
                 <button
                   onClick={() => {
@@ -79,10 +79,23 @@ function ToDoList({ todo }) {
               </Grid>
               <Grid item xs={7}>
                 <div className="TodoTitle">
-                  <Typography variant="h5" style={{ fontWeight: "bold" }}>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      fontWeight: "bold",
+                    }}
+                  >
                     {todo.title}
                   </Typography>
-                  <Typography variant="h6" style={{ fontWeight: "light" }}>
+                  <Typography
+                    variant="h6"
+                    style={{
+                      fontWeight: "light",
+                      textDecoration: todo.IsComplited
+                        ? "line-through"
+                        : "none",
+                    }}
+                  >
                     {todo.body}
                   </Typography>
                 </div>
