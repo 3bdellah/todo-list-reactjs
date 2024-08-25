@@ -1,26 +1,21 @@
 import * as React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import { AddopenContext } from "../contexts/AddopenContext";
+import { useContext } from "react";
 
 export default function CustomizedSnackbars() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
+  const { addopen, setAddOpen } = useContext(AddopenContext);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      return;
+      return setAddOpen(false);
     }
-
-    setOpen(false);
   };
 
   return (
     <div>
-      {handleClick}
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={addopen} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
           severity="success"

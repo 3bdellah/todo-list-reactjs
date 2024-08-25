@@ -11,8 +11,9 @@ import TodolistBtn from "./components/TodolistBtn";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { ToDosContext } from "./contexts/ToDosContext";
+import { AddopenContext } from "./contexts/AddopenContext";
+import CustomizedSnackbars from "./components/CustomizedSnackbars";
 
-// import CustomizedSnackbars from "./components/CustomizedSnackbars";
 //athor:
 import { v4 as uuid } from "uuid";
 const initialTodos = [
@@ -40,6 +41,7 @@ const Theme = createTheme({
 function App() {
   const [ToDos, setToDos] = useState(initialTodos);
   const [titleInput, setTitleInput] = useState("");
+  const [addopen, setAddOpen] = useState(false);
   const ToDosJsx = ToDos.map((T) => {
     return <ToDoList key={T.id} todo={T} />;
   });
@@ -53,61 +55,70 @@ function App() {
     };
     setToDos([...ToDos, newToDo]);
     setTitleInput("");
-    // <CustomizedSnackbars />;
+    setAddOpen(true);
   }
 
   return (
     <ThemeProvider theme={Theme}>
       <ToDosContext.Provider value={{ ToDos, setToDos }}>
-        <div className="App">
-          <Container maxWidth="sm">
-            <div className="home">
-              <h1>مهامي</h1>
-              <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
-              <TodolistBtn />
-              {ToDosJsx}
-              <Divider variant="middle" style={{ borderColor: "#4343439d" }} />
-              <div className="btn">
-                <Grid container spacing={1} style={{ paddingBottom: "10px" }}>
-                  <Grid
-                    item
-                    xs={4}
-                    display="flex"
-                    justifyContent="space-around"
-                    alignItems="center"
-                  >
-                    <Button
-                      variant="contained"
-                      startIcon={<PlaylistAddOutlinedIcon />}
-                      sx={{ width: "100%", height: "100%" }}
-                      onClick={handelAddClick}
+        <AddopenContext.Provider value={{ addopen, setAddOpen }}>
+          <CustomizedSnackbars />
+          <div className="App">
+            <Container maxWidth="sm">
+              <div className="home">
+                <h1>مهامي</h1>
+                <Divider
+                  variant="middle"
+                  style={{ borderColor: "#4343439d" }}
+                />
+                <TodolistBtn />
+                {ToDosJsx}
+                <Divider
+                  variant="middle"
+                  style={{ borderColor: "#4343439d" }}
+                />
+                <div className="btn">
+                  <Grid container spacing={1} style={{ paddingBottom: "10px" }}>
+                    <Grid
+                      item
+                      xs={4}
+                      display="flex"
+                      justifyContent="space-around"
+                      alignItems="center"
                     >
-                      إضافة
-                    </Button>
+                      <Button
+                        variant="contained"
+                        startIcon={<PlaylistAddOutlinedIcon />}
+                        sx={{ width: "100%", height: "100%" }}
+                        onClick={handelAddClick}
+                      >
+                        إضافة
+                      </Button>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={8}
+                      display="flex"
+                      justifyContent="space-around"
+                      alignItems="center"
+                    >
+                      <TextField
+                        id="outlined-basic"
+                        label="عنوان المهمة"
+                        variant="outlined"
+                        sx={{ width: "100%" }}
+                        value={titleInput}
+                        onChange={(e) => {
+                          setTitleInput(e.target.value);
+                        }}
+                      />
+                    </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    xs={8}
-                    display="flex"
-                    justifyContent="space-around"
-                    alignItems="center"
-                  >
-                    <TextField
-                      id="outlined-basic"
-                      label="عنوان المهمة"
-                      variant="outlined"
-                      sx={{ width: "100%" }}
-                      value={titleInput}
-                      onChange={(e) => {
-                        setTitleInput(e.target.value);
-                      }}
-                    />
-                  </Grid>
-                </Grid>
+                </div>
               </div>
-            </div>
-          </Container>
-        </div>
+            </Container>
+          </div>
+        </AddopenContext.Provider>
       </ToDosContext.Provider>
     </ThemeProvider>
   );
