@@ -44,8 +44,8 @@ font-weight: bold;
   border-Radius: 5px ;
   margin: 10px;
   color: #fff;
-  padding: 0px;
   transition: all 0.2s;
+  padding: 10px;
 
 }
 .TodoList:hover{
@@ -54,12 +54,12 @@ font-weight: bold;
   padding-bottom: 5px;
 }
 .TodoList button{
-  width: 40px;
-  height: 40px;
-  line-height: 0px;
+  width: 35px;
+  height: 35px;
+  line-height: 1px;
   border-radius: 50%;
   border-style:none ;
-  margin-right: 20px;
+  margin-right: auto;
   transition: all 0.2s ;
  
 }
@@ -69,8 +69,7 @@ box-shadow: rgba(47, 47, 47, 0.438) 0px 0px 10px;
 }
 .TodoTitle {
   text-align: right;
-  margin-right: 15px;
-  padding: 10px;
+  
 }
 
 /*Custo font*/

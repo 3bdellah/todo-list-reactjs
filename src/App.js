@@ -23,12 +23,6 @@ const initialTodos = [
     id: uuid(),
     title: "المهمة الأولى",
     body: "تفاصيل المهمة الأولى",
-    IsComplited: true,
-  },
-  {
-    id: uuid(),
-    title: "المهمة الثانية",
-    body: "تفاصيل المهمة الثانية",
     IsComplited: false,
   },
 ];

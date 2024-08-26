@@ -45,10 +45,11 @@ function ToDoList({ todo }) {
             <Grid container spacing={0}>
               <Grid
                 item
-                xs={5}
+                xs={4}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
+                style={{ marginLeft: "0px" }}
               >
                 <button
                   onClick={() => {
@@ -77,7 +78,7 @@ function ToDoList({ todo }) {
                   />
                 </button>
               </Grid>
-              <Grid item xs={7}>
+              <Grid item xs={8}>
                 <div className="TodoTitle">
                   <Typography
                     variant="h5"
