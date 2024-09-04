@@ -15,13 +15,8 @@ export default function CustomizedSnackbars() {
 
   return (
     <div>
-      <Snackbar open={addopen} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-          onClose={handleClose}
-          severity="success"
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
+      <Snackbar open={addopen} autoHideDuration={5000} onClose={handleClose}>
+        <Alert severity="success" variant="filled" sx={{ width: "100%" }}>
           تمت إضافة المهام بنجاح
         </Alert>
       </Snackbar>

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import ToDoList from "./components/ToDoList";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ToDosContext } from "./contexts/ToDosContext";
 import { AddopenContext } from "./contexts/AddopenContext";
 import CustomizedSnackbars from "./components/CustomizedSnackbars";
@@ -47,12 +47,17 @@ function App() {
   const [addopen, setAddOpen] = useState(false);
   const [DisplayTodosbtn, setDisplayTodosbtn] = useState("all");
 
-  const ComplitedToDos = ToDos.filter((T) => {
-    return T.IsComplited;
-  });
-  const NotComplitedToDos = ToDos.filter((T) => {
-    return !T.IsComplited;
-  });
+  const ComplitedToDos = useMemo(() => {
+    return ToDos.filter((T) => {
+      return T.IsComplited;
+    });
+  }, [ToDos]);
+
+  const NotComplitedToDos = useMemo(() => {
+    return ToDos.filter((T) => {
+      return !T.IsComplited;
+    });
+  }, [ToDos]);
 
   let ToDostemp;
 
