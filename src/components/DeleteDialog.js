@@ -8,10 +8,14 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useContext } from "react";
 import { dialogopenContext } from "../contexts/dialogopenContext";
 import { ToDosContext } from "../contexts/ToDosContext";
+import { AddopenContext } from "../contexts/AddopenContext";
+import { msgSnackBar } from "../contexts/msgSnackBarContext";
 
 export default function DeleteDialog({ id }) {
   const { open, setopen } = useContext(dialogopenContext);
   const { ToDos, setToDos } = useContext(ToDosContext);
+  const { setMsgSnackBar } = useContext(msgSnackBar);
+  const { setAddOpen } = useContext(AddopenContext);
 
   function handleClose() {
     setopen(false);
@@ -22,6 +26,11 @@ export default function DeleteDialog({ id }) {
     });
     setToDos(updateToDos);
     localStorage.setItem("ToDos", JSON.stringify(updateToDos));
+    setMsgSnackBar("تم حذف المهة بنجاح");
+    setAddOpen(true);
+    setTimeout(() => {
+      setAddOpen(false);
+    }, 2000);
   }
   return (
     <React.Fragment>

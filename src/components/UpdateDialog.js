@@ -9,10 +9,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { updateopenContext } from "../contexts/updateopenContext";
 import { ToDosContext } from "../contexts/ToDosContext";
 import { useContext, useState } from "react";
+import { AddopenContext } from "../contexts/AddopenContext";
+import { msgSnackBar } from "../contexts/msgSnackBarContext";
 
 export default function UpdateDialog({ id }) {
   const { updateOpen, setupdateOpen } = useContext(updateopenContext);
   const { ToDos, setToDos } = useContext(ToDosContext);
+  const { setAddOpen } = useContext(AddopenContext);
+  const { setMsgSnackBar } = useContext(msgSnackBar);
+
   const todo = ToDos.find((e) => e.id === id);
   const [UpdateTodo, setUpdateTodo] = useState({
     title: todo.title,
@@ -30,6 +35,12 @@ export default function UpdateDialog({ id }) {
     });
     setToDos(UpdatedTodo);
     localStorage.setItem("ToDos", JSON.stringify(UpdatedTodo));
+    setMsgSnackBar("تم تعديل المهة بنجاح");
+    setupdateOpen(false);
+    setAddOpen(true);
+    setTimeout(() => {
+      setAddOpen(false);
+    }, 2000);
   }
 
   return (
@@ -90,9 +101,7 @@ export default function UpdateDialog({ id }) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>إلغاء</Button>
-          <Button type="submit" onClick={handleUpdate}>
-            تحديث
-          </Button>
+          <Button onClick={handleUpdate}>تحديث</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
