@@ -15,6 +15,7 @@ import { useState, useEffect, useMemo } from "react";
 import { ToDosContext } from "./contexts/ToDosContext";
 import { AddopenContext } from "./contexts/AddopenContext";
 import CustomizedSnackbars from "./components/CustomizedSnackbars";
+import { msgSnackBar } from "./contexts/msgSnackBarContext";
 
 //athor:
 import { v4 as uuid } from "uuid";
@@ -46,6 +47,7 @@ function App() {
   const [titleInput, setTitleInput] = useState("");
   const [addopen, setAddOpen] = useState(false);
   const [DisplayTodosbtn, setDisplayTodosbtn] = useState("all");
+  const [MsgSnackBar, setMsgSnackBar] = React.useState("");
 
   const ComplitedToDos = useMemo(() => {
     return ToDos.filter((T) => {
@@ -96,102 +98,112 @@ function App() {
     setToDos(ToDosAdded);
     localStorage.setItem("ToDos", JSON.stringify(ToDosAdded));
     setTitleInput("");
+    setMsgSnackBar("تمت إضافة المهام بنجاح");
     setAddOpen(true);
+    setTimeout(() => {
+      setAddOpen(false);
+    }, 2000);
   }
 
   return (
     <ThemeProvider theme={Theme}>
       <ToDosContext.Provider value={{ ToDos, setToDos }}>
         <AddopenContext.Provider value={{ addopen, setAddOpen }}>
-          <CustomizedSnackbars />
-          <div className="App">
-            <Container maxWidth="sm">
-              <div className="home">
-                <h1>مهامي</h1>
-                <Divider
-                  variant="middle"
-                  style={{ borderColor: "#4343439d" }}
-                />
-                {/* to do btn ---------------------------------------------------------- */}
-                <Box component="section" sx={{ p: 2 }} className="btn-group">
-                  <ToggleButtonGroup
-                    aria-label="Complited button"
-                    exclusive
-                    value={DisplayTodosbtn}
-                    onChange={handelDisplayChange}
-                    color="primary"
-                  >
-                    <ToggleButton
-                      value="notComplited"
-                      style={{ fontWeight: "bold", borderColor: "#851835" }}
+          <msgSnackBar.Provider value={{ MsgSnackBar, setMsgSnackBar }}>
+            <CustomizedSnackbars />
+            <div className="App">
+              <Container maxWidth="sm">
+                <div className="home">
+                  <h1>مهامي</h1>
+                  <Divider
+                    variant="middle"
+                    style={{ borderColor: "#4343439d" }}
+                  />
+                  {/* to do btn ---------------------------------------------------------- */}
+                  <Box component="section" sx={{ p: 2 }} className="btn-group">
+                    <ToggleButtonGroup
+                      aria-label="Complited button"
+                      exclusive
+                      value={DisplayTodosbtn}
+                      onChange={handelDisplayChange}
+                      color="primary"
                     >
-                      غير منجز
-                    </ToggleButton>
-                    <ToggleButton
-                      value="complited"
-                      style={{ fontWeight: "bold", borderColor: "#851835" }}
-                    >
-                      منجز
-                    </ToggleButton>
-                    <ToggleButton
-                      value="all"
-                      style={{ fontWeight: "bold", borderColor: "#851835" }}
-                    >
-                      الكل
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </Box>
-                {/**------------------------------------------------------------------------- */}
-                <div style={{ maxHeight: "55vh", overflowY: "scroll" }}>
-                  {ToDosJsx}
-                </div>
-                <Divider
-                  variant="middle"
-                  style={{ borderColor: "#4343439d" }}
-                />
-                <div className="btn">
-                  <Grid container spacing={1} style={{ paddingBottom: "10px" }}>
-                    <Grid
-                      item
-                      xs={4}
-                      display="flex"
-                      justifyContent="space-around"
-                      alignItems="center"
-                    >
-                      <Button
-                        variant="contained"
-                        startIcon={<PlaylistAddOutlinedIcon />}
-                        sx={{ width: "100%", height: "100%" }}
-                        onClick={handelAddClick}
-                        disabled={titleInput.length <= 0}
+                      <ToggleButton
+                        value="notComplited"
+                        style={{ fontWeight: "bold", borderColor: "#851835" }}
                       >
-                        إضافة
-                      </Button>
-                    </Grid>
+                        غير منجز
+                      </ToggleButton>
+                      <ToggleButton
+                        value="complited"
+                        style={{ fontWeight: "bold", borderColor: "#851835" }}
+                      >
+                        منجز
+                      </ToggleButton>
+                      <ToggleButton
+                        value="all"
+                        style={{ fontWeight: "bold", borderColor: "#851835" }}
+                      >
+                        الكل
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  </Box>
+                  {/**------------------------------------------------------------------------- */}
+                  <div style={{ maxHeight: "55vh", overflowY: "scroll" }}>
+                    {ToDosJsx}
+                  </div>
+                  <Divider
+                    variant="middle"
+                    style={{ borderColor: "#4343439d" }}
+                  />
+                  <div className="btn">
                     <Grid
-                      item
-                      xs={8}
-                      display="flex"
-                      justifyContent="space-around"
-                      alignItems="center"
+                      container
+                      spacing={1}
+                      style={{ paddingBottom: "10px" }}
                     >
-                      <TextField
-                        id="outlined-basic"
-                        color="primary"
-                        label="مهمة جديدة"
-                        variant="outlined"
-                        style={{ direction: "rtl", width: "100%" }}
-                        value={titleInput}
-                        onChange={(e) => {
-                          setTitleInput(e.target.value);
-                        }}
-                      />
+                      <Grid
+                        item
+                        xs={4}
+                        display="flex"
+                        justifyContent="space-around"
+                        alignItems="center"
+                      >
+                        <Button
+                          variant="contained"
+                          startIcon={<PlaylistAddOutlinedIcon />}
+                          sx={{ width: "100%", height: "100%" }}
+                          onClick={handelAddClick}
+                          disabled={titleInput.length <= 0}
+                        >
+                          إضافة
+                        </Button>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={8}
+                        display="flex"
+                        justifyContent="space-around"
+                        alignItems="center"
+                      >
+                        <TextField
+                          id="outlined-basic"
+                          color="primary"
+                          label="مهمة جديدة"
+                          variant="outlined"
+                          style={{ direction: "rtl", width: "100%" }}
+                          value={titleInput}
+                          onChange={(e) => {
+                            setTitleInput(e.target.value);
+                          }}
+                        />
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </div>
                 </div>
-              </div>
-            </Container>
-          </div>
+              </Container>
+            </div>
+          </msgSnackBar.Provider>
         </AddopenContext.Provider>
       </ToDosContext.Provider>
     </ThemeProvider>
